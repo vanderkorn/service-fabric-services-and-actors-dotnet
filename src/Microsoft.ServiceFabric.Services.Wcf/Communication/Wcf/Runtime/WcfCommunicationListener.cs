@@ -139,6 +139,35 @@ namespace Microsoft.ServiceFabric.Services.Communication.Wcf.Runtime
         {
         }
 
+        /// <summary>
+        ///     Constructs a WCF based communication listener that uses specified listener binding and 
+        ///     endpoint address derived from the specified endpoint address.
+        /// </summary>
+        /// <param name="serviceContext">
+        ///     The context of the service for which this communication listener is being constructed.
+        /// </param>
+        /// <param name="wcfServiceType">
+        ///     Type of WCF service implementing the specified WCF service contract.
+        /// </param>
+        /// <param name="listenerBinding">
+        ///     The binding to use for the WCF endpoint. If the listenerBinding is not specified or it is null, a default listener binding is 
+        ///     created using <see cref="WcfUtility.CreateTcpListenerBinding"/> method.
+        /// </param>
+        /// <param name="address">
+        ///     The listen address for the WCF endpoint. If the address is not specified or it is null, a default address is created by 
+        ///     looking up the endpoint resource from the service manifest. The endpoint resource name is derived from the WCF 
+        ///     service contract type using <see cref="Microsoft.ServiceFabric.Services.ServiceNameFormat.GetEndpointName"/> method.
+        ///     If matching endpoint resource is not found in the service manifest, a default endpoint resource definition with port zero is used.
+        /// </param>
+        public WcfCommunicationListener(
+            ServiceContext serviceContext,
+            Type wcfServiceType,
+            Binding listenerBinding = null,
+            EndpointAddress address = null)
+            : this(serviceContext, wcfServiceType, listenerBinding, address, null)
+        {
+        }
+
         private WcfCommunicationListener(
             ServiceContext serviceContext,
             TServiceContract wcfServiceObject,
